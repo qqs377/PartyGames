@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>聚会游戏合集</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 主菜单 -->
+        <div id="menu" class="screen active">
+            <h1>🎉 聚会游戏合集</h1>
+            <div class="game-grid">
+                <button class="game-card" onclick="showGame('draw-guess')">
+                    <span class="icon">🎨</span>
+                    <span class="title">你画我猜</span>
+                </button>
+                <button class="game-card" onclick="showGame('truth-dare')">
+                    <span class="icon">💬</span>
+                    <span class="title">真心话大冒险</span>
+                </button>
+                <button class="game-card" onclick="showGame('undercover')">
+                    <span class="icon">🕵️</span>
+                    <span class="title">谁是卧底</span>
+                </button>
+                <button class="game-card" onclick="showGame('wheel')">
+                    <span class="icon">🎡</span>
+                    <span class="title">幸运转盘</span>
+                </button>
+                <button class="game-card" onclick="showGame('lottery')">
+                    <span class="icon">🎫</span>
+                    <span class="title">抽签</span>
+                </button>
+                <button class="game-card" onclick="showGame('dice')">
+                    <span class="icon">🎲</span>
+                    <span class="title">骰子</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- 你画我猜 -->
+        <div id="draw-guess" class="screen">
+            <button class="back-btn" onclick="showGame('menu')">← 返回</button>
+            <h2>🎨 你画我猜</h2>
+            <div class="game-content">
+                <div id="word-display" class="word-display">点击开始获取词语</div>
+                <button class="primary-btn" onclick="getDrawWord()">获取新词语</button>
+                <div class="category-select">
+                    <label>类别：</label>
+                    <select id="draw-category">
+                        <option value="all">全部</option>
+                        <option value="animals">动物</option>
+                        <option value="food">食物</option>
+                        <option value="objects">物品</option>
+                        <option value="actions">动作</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- 真心话大冒险 -->
+        <div id="truth-dare" class="screen">
+            <button class="back-btn" onclick="showGame('menu')">← 返回</button>
+            <h2>💬 真心话大冒险</h2>
+            <div class="game-content">
+                <div class="td-buttons">
+                    <button class="choice-btn truth" onclick="getTruth()">真心话</button>
+                    <button class="choice-btn dare" onclick="getDare()">大冒险</button>
+                </div>
+                <div id="td-result" class="result-display"></div>
+            </div>
+        </div>
+
+        <!-- 谁是卧底 -->
+        <div id="undercover" class="screen">
+            <button class="back-btn" onclick="showGame('menu')">← 返回</button>
+            <h2>🕵️ 谁是卧底</h2>
+            <div class="game-content">
+                <div class="setup-panel">
+                    <label>玩家人数：<input type="number" id="player-count" min="3" max="10" value="6"></label>
+                    <label>卧底人数：<input type="number" id="spy-count" min="1" max="3" value="1"></label>
+                    <button class="primary-btn" onclick="startUndercover()">开始游戏</button>
+                </div>
+                <div id="uc-display" class="uc-display"></div>
+            </div>
+        </div>
+
+        <!-- 幸运转盘 -->
+        <div id="wheel" class="screen">
+            <button class="back-btn" onclick="showGame('menu')">← 返回</button>
+            <h2>🎡 幸运转盘</h2>
+            <div class="game-content">
+                <canvas id="wheel-canvas" width="400" height="400"></canvas>
+                <button class="primary-btn" onclick="spinWheel()" id="spin-btn">开始转动</button>
+                <div class="wheel-setup">
+                    <label>选项（每行一个）：</label>
+                    <textarea id="wheel-options" rows="5" placeholder="小明&#10;小红&#10;小刚&#10;小美"></textarea>
+                    <button class="secondary-btn" onclick="updateWheel()">更新转盘</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 抽签 -->
+        <div id="lottery" class="screen">
+            <button class="back-btn" onclick="showGame('menu')">← 返回</button>
+            <h2>🎫 抽签</h2>
+            <div class="game-content">
+                <div class="lottery-setup">
+                    <label>签筒内容（每行一个）：</label>
+                    <textarea id="lottery-items" rows="6" placeholder="一等奖&#10;二等奖&#10;三等奖&#10;谢谢参与&#10;谢谢参与&#10;谢谢参与"></textarea>
+                    <button class="secondary-btn" onclick="resetLottery()">重置签筒</button>
+                </div>
+                <div class="lottery-display">
+                    <div id="lottery-result" class="lottery-result">准备抽签</div>
+                    <div id="remaining-count" class="remaining">剩余：0</div>
+                    <button class="primary-btn" onclick="drawLottery()">抽一签</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 骰子 -->
+        <div id="dice" class="screen">
+            <button class="back-btn" onclick="showGame('menu')">← 返回</button>
+            <h2>🎲 骰子</h2>
+            <div class="game-content">
+                <div class="dice-container" id="dice-container"></div>
+                <div class="dice-controls">
+                    <label>骰子数量：
+                        <select id="dice-count" onchange="updateDiceCount()">
+                            <option value="1">1个</option>
+                            <option value="2" selected>2个</option>
+                            <option value="3">3个</option>
+                            <option value="4">4个</option>
+                            <option value="5">5个</option>
+                        </select>
+                    </label>
+                    <button class="primary-btn" onclick="rollDice()">投掷骰子</button>
+                </div>
+                <div id="dice-total" class="dice-total"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
