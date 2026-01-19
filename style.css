@@ -1,0 +1,411 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 800px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+.screen {
+    display: none;
+    padding: 40px;
+    min-height: 500px;
+}
+
+.screen.active {
+    display: block;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 40px;
+    font-size: 2.5em;
+}
+
+h2 {
+    color: #667eea;
+    margin-bottom: 30px;
+    font-size: 2em;
+    text-align: center;
+}
+
+.game-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.game-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 15px;
+    padding: 30px 20px;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.game-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+}
+
+.game-card .icon {
+    font-size: 3em;
+}
+
+.game-card .title {
+    font-size: 1.2em;
+    font-weight: 600;
+}
+
+.back-btn {
+    background: #6c757d;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    font-size: 1em;
+}
+
+.back-btn:hover {
+    background: #5a6268;
+}
+
+.primary-btn, .secondary-btn, .choice-btn {
+    padding: 15px 40px;
+    font-size: 1.1em;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 600;
+}
+
+.primary-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.primary-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.secondary-btn {
+    background: #6c757d;
+    color: white;
+    margin-top: 10px;
+}
+
+.secondary-btn:hover {
+    background: #5a6268;
+}
+
+.game-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+/* 你画我猜 */
+.word-display {
+    background: #f8f9fa;
+    padding: 40px;
+    border-radius: 15px;
+    font-size: 2em;
+    font-weight: bold;
+    color: #667eea;
+    min-width: 300px;
+    text-align: center;
+    border: 3px dashed #667eea;
+}
+
+.category-select {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-size: 1.1em;
+}
+
+.category-select select {
+    padding: 8px 15px;
+    border-radius: 8px;
+    border: 2px solid #667eea;
+    font-size: 1em;
+}
+
+/* 真心话大冒险 */
+.td-buttons {
+    display: flex;
+    gap: 20px;
+}
+
+.choice-btn {
+    padding: 20px 50px;
+    font-size: 1.3em;
+}
+
+.choice-btn.truth {
+    background: #28a745;
+    color: white;
+}
+
+.choice-btn.truth:hover {
+    background: #218838;
+    transform: scale(1.05);
+}
+
+.choice-btn.dare {
+    background: #dc3545;
+    color: white;
+}
+
+.choice-btn.dare:hover {
+    background: #c82333;
+    transform: scale(1.05);
+}
+
+.result-display {
+    background: #f8f9fa;
+    padding: 30px;
+    border-radius: 15px;
+    font-size: 1.3em;
+    min-width: 400px;
+    text-align: center;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 谁是卧底 */
+.setup-panel {
+    background: #f8f9fa;
+    padding: 30px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.setup-panel label {
+    font-size: 1.1em;
+}
+
+.setup-panel input {
+    padding: 8px;
+    border-radius: 8px;
+    border: 2px solid #667eea;
+    margin-left: 10px;
+    width: 80px;
+}
+
+.uc-display {
+    width: 100%;
+}
+
+.uc-card {
+    background: #f8f9fa;
+    padding: 30px;
+    border-radius: 15px;
+    margin: 15px 0;
+    cursor: pointer;
+    border: 3px solid #667eea;
+    transition: transform 0.3s;
+}
+
+.uc-card:hover {
+    transform: scale(1.02);
+}
+
+.uc-card h3 {
+    color: #667eea;
+    margin-bottom: 10px;
+}
+
+.uc-word {
+    font-size: 2em;
+    font-weight: bold;
+    color: #333;
+    filter: blur(10px);
+    transition: filter 0.5s;
+}
+
+.uc-word.revealed {
+    filter: blur(0);
+}
+
+/* 转盘 */
+#wheel-canvas {
+    border-radius: 50%;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    margin: 20px 0;
+}
+
+.wheel-setup {
+    width: 100%;
+    max-width: 400px;
+}
+
+.wheel-setup textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 2px solid #667eea;
+    font-size: 1em;
+    margin-top: 10px;
+}
+
+/* 抽签 */
+.lottery-setup {
+    width: 100%;
+    max-width: 400px;
+}
+
+.lottery-setup textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 2px solid #667eea;
+    font-size: 1em;
+    margin: 10px 0;
+}
+
+.lottery-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.lottery-result {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 40px;
+    border-radius: 15px;
+    font-size: 2em;
+    font-weight: bold;
+    min-width: 300px;
+    text-align: center;
+}
+
+.remaining {
+    font-size: 1.2em;
+    color: #666;
+}
+
+/* 骰子 */
+.dice-container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 30px 0;
+}
+
+.dice {
+    width: 80px;
+    height: 80px;
+    background: white;
+    border: 3px solid #667eea;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3em;
+    font-weight: bold;
+    color: #667eea;
+    animation: roll 0.5s;
+}
+
+@keyframes roll {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(90deg); }
+    50% { transform: rotate(180deg); }
+    75% { transform: rotate(270deg); }
+}
+
+.dice-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+.dice-controls label {
+    font-size: 1.1em;
+}
+
+.dice-controls select {
+    padding: 8px 15px;
+    border-radius: 8px;
+    border: 2px solid #667eea;
+    font-size: 1em;
+    margin-left: 10px;
+}
+
+.dice-total {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #667eea;
+    margin-top: 20px;
+}
+
+/* 响应式设计 */
+@media (max-width: 600px) {
+    .screen {
+        padding: 20px;
+    }
+    
+    h1 {
+        font-size: 1.8em;
+    }
+    
+    h2 {
+        font-size: 1.5em;
+    }
+    
+    .game-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .td-buttons {
+        flex-direction: column;
+    }
+    
+    .result-display {
+        min-width: auto;
+        width: 100%;
+    }
+    
+    #wheel-canvas {
+        width: 300px;
+        height: 300px;
+    }
+}
